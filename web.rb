@@ -49,11 +49,11 @@ post '/charge' do
   # Create the charge on Stripe's servers - this will charge the user's card
   begin
     charge = Stripe::Charge.create(
-      :amount => payload[:amount], # this number should be in cents
-      :currency => "usd",
+      :amount => payload[:amount], # this number should be in cents for usd and paisa for inr
+      :currency => payload[:currency],
       :customer => customer,
       :source => source,
-      :description => "Example Charge",
+      :description => "Sri Surabhi iOS Application Charge",
       :shipping => payload[:shipping],
     )
   rescue Stripe::StripeError => e
@@ -91,9 +91,9 @@ post '/create_charge' do
   begin
     charge = Stripe::Charge.create(
       :amount => params[:amount], # this number should be in cents
-      :currency => "usd",
+      :currency => params[:currency],
       :source => params[:source],
-      :description => "Example Charge"
+      :description => "Sri Surabhi iOS Application Charge"
     )
   rescue Stripe::StripeError => e
     status 402
@@ -127,7 +127,7 @@ post '/stripe-webhook' do
         :currency => source.currency,
         :source => source.id,
         :customer => source.metadata["customer"],
-        :description => "Example Charge"
+        :description => "Sri Surabhi iOS Application Charge"
       )
     rescue Stripe::StripeError => e
       return log_info("Error creating charge: #{e.message}")
