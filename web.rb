@@ -62,7 +62,8 @@ post '/charge' do
   end
 
   status 200
-  return log_info("Charge successfully created")
+  json = {:status => 200, :msg => "Payment Successfull", :paymentID => @customer.id}
+  return log_info(json.to_json)
 end
 
 def authenticate!
@@ -101,7 +102,8 @@ post '/create_charge' do
   end
 
   status 200
-  return log_info("Charge successfully created")
+  json = {:status => 200, :msg => "Payment Successfull", :paymentID => @customer.id}
+  return log_info(json.to_json)
 end
 
 # This endpoint responds to webhooks sent by Stripe. To use it, you'll need
